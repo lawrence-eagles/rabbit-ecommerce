@@ -104,7 +104,8 @@ const NewArrivals = () => {
   const handleMouseDown = (e) => {
     setIsDragging(true);
     setStartX(e.pageX - scrollRef.current.offsetLeft);
-    scrollRef.current.scrollBy({ left: scrollAmount, behaviour: "smooth" });
+    // scrollRef.current.scrollBy({ left: scrollAmount, behaviour: "smooth" });
+    setScrollLeft(scrollRef.current.scrollLeft); // just added
   };
 
   const handleMouseMove = (e) => {
