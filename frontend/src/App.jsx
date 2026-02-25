@@ -9,6 +9,7 @@ import CollectionPage from "./pages/CollectionPage";
 import ProductDetails from "./components/Products/ProductDetails.";
 import ScrollToTop from "./components/Layout/ScrollToTop";
 import Checkout from "./components/Cart/Checkout";
+import OrderConfirmationPage from "./pages/OrderConfirmationPage";
 
 const App = () => {
   return (
@@ -24,6 +25,10 @@ const App = () => {
           <Route path="collection/:collection" element={<CollectionPage />} />
           <Route path="product/:id" element={<ProductDetails />} />
           <Route path="checkout" element={<Checkout />} />
+          <Route
+            path="order-confirmation"
+            element={<OrderConfirmationPage />}
+          />
         </Route>
         <Route>{/*Adim Layout*/}</Route>
       </Routes>
