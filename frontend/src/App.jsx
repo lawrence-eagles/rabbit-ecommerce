@@ -10,6 +10,8 @@ import ProductDetails from "./components/Products/ProductDetails.";
 import ScrollToTop from "./components/Layout/ScrollToTop";
 import Checkout from "./components/Cart/Checkout";
 import OrderConfirmationPage from "./pages/OrderConfirmationPage";
+import OrderDetailsPage from "./pages/OrderDetailsPage";
+import MyOrderPage from "./pages/MyOrderPage";
 
 const App = () => {
   return (
@@ -29,6 +31,8 @@ const App = () => {
             path="order-confirmation"
             element={<OrderConfirmationPage />}
           />
+          <Route path="order/:id" element={<OrderDetailsPage />} />
+          <Route path="my-orders" element={<MyOrderPage />} />
         </Route>
         <Route>{/*Adim Layout*/}</Route>
       </Routes>
