@@ -13,6 +13,7 @@ import OrderConfirmationPage from "./pages/OrderConfirmationPage";
 import OrderDetailsPage from "./pages/OrderDetailsPage";
 import MyOrderPage from "./pages/MyOrderPage";
 import AdminLayout from "./components/Admin/AdminLayout";
+import AdminHomePage from "./pages/AdminHomePage";
 
 const App = () => {
   return (
@@ -36,7 +37,8 @@ const App = () => {
           <Route path="my-orders" element={<MyOrderPage />} />
         </Route>
         <Route path="/admin" element={<AdminLayout />}>
-          {/*Adim Layout*/}
+          {/*Admin Layout*/}
+          <Route index element={<AdminHomePage />} />
         </Route>
       </Routes>
     </BrowserRouter>
