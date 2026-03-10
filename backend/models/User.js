@@ -29,11 +29,13 @@ const userSchema = new mongoose.Schema(
 );
 
 // password harsh middleware
-userSchema.pre("save", async function (next) {
-  if (!this.isModified("password")) return next();
+userSchema.pre("save", async function () {
   const salt = await bcrypt.genSalt(10);
   this.password = await bcrypt.hash(this.password, salt);
-  // next(); find a solution to this if this is uncommented it is showing next is not a function but it is in the original
+
+  if (this.isModified("password")) {
+    this.password = await bcrypt.hash(this.password, salt);
+  }
 });
 
 // Match user entered password to hashed password in database
