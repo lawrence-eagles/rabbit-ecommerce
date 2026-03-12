@@ -99,7 +99,7 @@ const adminOrderSlice = createSlice({
       })
 
       // update order status
-      .addCase(updateOrderStatus.loading, (state) => {
+      .addCase(updateOrderStatus.pending, (state) => {
         state.loading = true;
         state.error = null;
       })
@@ -118,7 +118,7 @@ const adminOrderSlice = createSlice({
       })
 
       // Delete orders
-      .addCase(deleteOrder.loading, (state) => {
+      .addCase(deleteOrder.pending, (state) => {
         state.loading = loading;
         state.error = null;
       })
