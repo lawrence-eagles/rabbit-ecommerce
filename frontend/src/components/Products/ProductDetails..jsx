@@ -63,7 +63,7 @@ const ProductDetails = ({ productId }) => {
       }),
     )
       .then(() => {
-        toast.succcess("Product added to cart!", {
+        toast.success("Product added to cart!", {
           duration: 3000,
         });
       })
