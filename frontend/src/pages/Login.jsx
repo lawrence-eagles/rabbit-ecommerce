@@ -1,21 +1,40 @@
-import { useState } from "react";
-import { Link, useNavigate } from "react-router";
+import { useEffect, useState } from "react";
+import { Link, useLocation, useNavigate } from "react-router";
 import login from "../assets/login.webp";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { loginUser } from "../redux/slice/authSlice";
+import { mergeCart } from "../redux/slice/cartSlice";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const location = useLocation();
+  const { user, guestId } = useSelector((state) => state.auth);
+  const { cart } = useSelector((state) => state.cart);
+
+  // Get redirect parameter and check if it's checkout or something else
+  const redirect = new URLSearchParams(location.search).get("redirect") || "/";
+  const isCheckoutRedirect = redirect.includes("checkout");
+
+  useEffect(() => {
+    if (user) {
+      if (cart?.products.length > 0 && guestId) {
+        dispatch(mergeCart({ guestId, user })).then(() => {
+          navigate(isCheckoutRedirect ? "/checkout" : "/");
+        });
+      } else {
+        navigate(isCheckoutRedirect ? "/checkout" : "/");
+      }
+    }
+  }, [user, guestId, cart, navigate, isCheckoutRedirect, dispatch]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
     setEmail("");
     setPassword("");
     dispatch(loginUser({ email, password }));
-    navigate("/");
   };
 
   return (
@@ -60,7 +79,10 @@ const Login = () => {
           </button>
           <p className="mt-6 text-center text-sm">
             Don't have an account?{" "}
-            <Link to="/register" className="text-blue-500">
+            <Link
+              to={`/register?redirect=${encodeURIComponent(redirect)}`}
+              className="text-blue-500"
+            >
               Register
             </Link>
           </p>
