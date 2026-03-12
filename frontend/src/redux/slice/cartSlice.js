@@ -188,32 +188,32 @@ const cartSlice = createSlice({
       })
 
       // Handle removing item from cart
-      .addCase(addToCart.pending, (state) => {
+      .addCase(removeFromCart.pending, (state) => {
         state.loading = true;
         state.error = null;
       })
-      .addCase(addToCart.fulfilled, (state, action) => {
+      .addCase(removeFromCart.fulfilled, (state, action) => {
         state.loading = false;
         state.cart = action.payload;
         saveCartToStorage(action.payload);
       })
-      .addCase(addToCart.rejected, (state, action) => {
+      .addCase(removeFromCart.rejected, (state, action) => {
         state.loading = false;
         state.error =
           action.payload?.message || "Failed to remove item from cart";
       })
 
       // Handle merging cart
-      .addCase(addToCart.pending, (state) => {
+      .addCase(mergeCart.pending, (state) => {
         state.loading = true;
         state.error = null;
       })
-      .addCase(addToCart.fulfilled, (state, action) => {
+      .addCase(mergeCart.fulfilled, (state, action) => {
         state.loading = false;
         state.cart = action.payload;
         saveCartToStorage(action.payload);
       })
-      .addCase(addToCart.rejected, (state, action) => {
+      .addCase(mergeCart.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload?.message || "Failed to merge cart";
       });
