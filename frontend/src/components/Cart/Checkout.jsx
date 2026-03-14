@@ -86,7 +86,7 @@ const Checkout = () => {
     reference: new Date().getTime().toString(),
     email: user.email,
     amount: cart.totalPrice * 133000, //Amount is in the country's lowest currency. E.g Kobo, so 20000 kobo = N200 / i am converting from $ to naira.
-    publicKey: "pk_test_2784fe18ddcb58100a151367b8331fcfb107d2dc",
+    publicKey: `${import.meta.env.VITE_PAYSTACK_PULIC_KEY}`,
   };
 
   // you can call this function anything
