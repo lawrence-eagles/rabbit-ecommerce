@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
-import PayStackButton from "./PayStackButton";
 import { useDispatch, useSelector } from "react-redux";
 import { createCheckout } from "../../redux/slice/checkoutSlice";
+import { usePaystackPayment } from "react-paystack";
+import axios from "axios";
 
 const Checkout = () => {
   const navigate = useNavigate();
@@ -77,6 +78,44 @@ const Checkout = () => {
     } catch (error) {
       console.error(error);
     }
+  };
+
+  // Paystack configuration
+
+  const config = {
+    reference: new Date().getTime().toString(),
+    email: user.email,
+    amount: cart.totalPrice * 133000, //Amount is in the country's lowest currency. E.g Kobo, so 20000 kobo = N200 / i am converting from $ to naira.
+    publicKey: "pk_test_2784fe18ddcb58100a151367b8331fcfb107d2dc",
+  };
+
+  // you can call this function anything
+  const onSuccess = (reference) => {
+    // Implementation for whatever you want to do with reference and after success call.
+    // console.log("success", reference);
+    handlePaymentSuccess();
+  };
+
+  // you can call this function anything
+  const onClose = () => {
+    // implementation for  whatever you want to do when the Paystack dialog closed.
+    console.log("closed");
+  };
+
+  const PaystackButtonHook = () => {
+    const initializePayment = usePaystackPayment(config);
+    return (
+      <div>
+        <button
+          onClick={() => {
+            initializePayment({ onSuccess, onClose });
+          }}
+          className={"w-full bg-green-500 text-white py-3 rounded"}
+        >
+          Pay Now
+        </button>
+      </div>
+    );
   };
 
   if (loading) return <p>Loading cart...</p>;
@@ -221,13 +260,14 @@ const Checkout = () => {
               </button>
             ) : (
               <div>
-                <h3 className="text-lg mb-4">Pay with Paypal</h3>
-                {/* PayPal Button Component */}
-                <PayStackButton
+                <h3 className="text-lg mb-4">Pay with Paystack</h3>
+                {/* Paystack Button Component */}
+                {/* <PayStackButton
                   amount={cart.totalPrice}
                   onSuccess={handlePaymentSuccess}
                   onError={(err) => alert("Payment failed. Try again.")}
-                />
+                /> */}
+                <PaystackButtonHook />
               </div>
             )}
           </div>
