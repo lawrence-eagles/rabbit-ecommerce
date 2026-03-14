@@ -262,11 +262,6 @@ const Checkout = () => {
               <div>
                 <h3 className="text-lg mb-4">Pay with Paystack</h3>
                 {/* Paystack Button Component */}
-                {/* <PayStackButton
-                  amount={cart.totalPrice}
-                  onSuccess={handlePaymentSuccess}
-                  onError={(err) => alert("Payment failed. Try again.")}
-                /> */}
                 <PaystackButtonHook />
               </div>
             )}
